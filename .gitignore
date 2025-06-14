@@ -4,7 +4,8 @@
 .LSOverride
 ._*
 
-# Build folders
+# Build files/folders
+Makefile
 
 # Logs and temp files
 *.log
