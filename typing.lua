@@ -8,48 +8,48 @@ local function read_file(filename)
 end
 
 local function stdin_is_interactive()
-  local is_windows = package.config:sub(1,1) == "\\"
-
-  if is_windows then
-    -- Only check with PowerShell on Windows
-    local f = io.popen('powershell -NoProfile -Command "[Console]::IsInputRedirected" 2>NUL')
-    if f then
-      local result = f:read("*l")
-      f:close()
-      return result == "false"
-    end
-    return true -- fallback: assume interactive
-  else
-    -- POSIX systems: use test or tty
-    local f = io.popen('test -t 0 && echo true || echo false 2>/dev/null')
-    if f then
-      local result = f:read("*l")
-      f:close()
-      return result == "true"
-    end
-    return true -- fallback: assume interactive
-  end
+	local is_windows = package.config:sub(1,1) == "\\"
+	
+	if is_windows then
+		-- Only check with PowerShell on Windows
+		local f = io.popen('powershell -NoProfile -Command "[Console]::IsInputRedirected" 2>NUL')
+		if f then
+			local result = f:read("*l")
+			f:close()
+			return result == "false"
+		end
+		return true -- fallback: assume interactive
+	else
+		-- POSIX systems: use test or tty
+		local f = io.popen('test -t 0 && echo true || echo false 2>/dev/null')
+		if f then
+			local result = f:read("*l")
+			f:close()
+			return result == "true"
+		end
+		return true -- fallback: assume interactive
+	end
 end
 
 
 local function read_stdin()
-  if stdin_is_interactive() then
-    io.stderr:write("Error: '-' was given, but no piped input was detected.\n")
-    os.exit(1)
-  end
-
-  -- now it's safe to read stdin
-  local content = io.read("*a")
-  if not content or content == "" then
-    io.stderr:write("Error: No content received from stdin.\n")
-    os.exit(1)
-  end
-
-  local lines = {}
-  for line in content:gmatch("([^\n]*)\n?") do
-    table.insert(lines, line)
-  end
-  return lines
+	if stdin_is_interactive() then
+		io.stderr:write("Error: '-' was given, but no piped input was detected.\n")
+		os.exit(1)
+	end
+	
+	-- now it's safe to read stdin
+	local content = io.read("*a")
+	if not content or content == "" then
+		io.stderr:write("Error: No content received from stdin.\n")
+		os.exit(1)
+	end
+	
+	local lines = {}
+	for line in content:gmatch("([^\n]*)\n?") do
+		table.insert(lines, line)
+	end
+	return lines
 end
 
 local function read_clipboard()
