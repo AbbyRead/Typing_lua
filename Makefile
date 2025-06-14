@@ -1,3 +1,7 @@
+# This makefile is just so that I can update the copy
+#   that I have in a PATH directory, so that I can use
+#   it without specifying the location of it.
+
 THIS = typing.lua
 DEST = $(HOME)/bin/$(THIS)
 
