@@ -1,6 +1,8 @@
 THIS = typing.lua
 DEST = $(HOME)/bin/$(THIS)
 
+.PHONY: install, diff
+
 install: $(DEST)
 
 $(DEST): $(THIS)
@@ -11,7 +13,6 @@ $(DEST): $(THIS)
 		cp $(THIS) $(DEST) && echo "✓ Installed successfully." || echo "✗ Copy failed!"; \
 	fi
 
-.PHONY: diff
 diff:
 	@if diff -q $(DEST) $(THIS); then \
 		echo "✗ No differences found."; \
