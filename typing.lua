@@ -116,9 +116,13 @@ else
 	lines = read_file(arg_filename)
 end
 
-print("\n")
+-- Delineate start of typing practice
+for _ = 1, 40 do io.write("-") end
+print("")
+
 -- Typing practice loop
 for i, line in ipairs(lines) do
+	io.write("\n")
 	print(line)
 	wait_for_input()
 end
